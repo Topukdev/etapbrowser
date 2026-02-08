@@ -1,0 +1,249 @@
+/* ETAP Tarayıcı - Beyaz Mod (Light Theme) */
+
+/* Ana Pencere */
+QMainWindow {
+    background-color: #ffffff;
+}
+
+QWidget {
+    background-color: transparent;
+    color: #2c3e50;
+}
+
+/* Sadece ana containerlar için arka plan */
+QMainWindow > QWidget {
+    background-color: #ffffff;
+}
+
+/* Toolbar */
+QToolBar {
+    spacing: 10px;
+    min-height: 40px;
+    background-color: #f8f9fa;
+    border-bottom: 1px solid #e0e0e0;
+    padding: 5px;
+}
+
+QToolBar::separator {
+    background-color: #e0e0e0;
+    width: 1px;
+    margin: 5px;
+}
+
+/* Butonlar */
+QPushButton, QToolButton {
+    background-color: #ffffff;
+    color: #2c3e50;
+    border: 1px solid #d0d0d0;
+    border-radius: 5px;
+    padding: 6px 12px;
+    font-size: 13px;
+    font-weight: 500;
+}
+
+QPushButton:hover, QToolButton:hover {
+    background-color: #e8f4f8;
+    border-color: #3498db;
+}
+
+QPushButton:pressed, QToolButton:pressed {
+    background-color: #d6eaf8;
+}
+
+QPushButton:disabled, QToolButton:disabled {
+    background-color: #f0f0f0;
+    color: #a0a0a0;
+    border-color: #e0e0e0;
+}
+
+/* QAction Butonları (Toolbar) */
+QToolBar QToolButton {
+    background-color: transparent;
+    border: 1px solid transparent;
+    border-radius: 4px;
+    padding: 5px 10px;
+    margin: 2px;
+}
+
+QToolBar QToolButton:hover {
+    background-color: #e8f4f8;
+    border-color: #3498db;
+}
+
+QToolBar QToolButton:pressed {
+    background-color: #d6eaf8;
+}
+
+/* URL ve Arama Çubukları */
+QLineEdit {
+    background-color: #ffffff;
+    color: #2c3e50;
+    border: 1px solid #d0d0d0;
+    border-radius: 6px;
+    padding: 8px 12px;
+    font-size: 13px;
+    selection-background-color: #3498db;
+    selection-color: #ffffff;
+}
+
+QLineEdit:focus {
+    border: 2px solid #3498db;
+    background-color: #fafbfc;
+}
+
+QLineEdit:hover {
+    border-color: #b0b0b0;
+}
+
+/* MessageBox */
+QMessageBox {
+    background-color: #ffffff;
+}
+
+QMessageBox QLabel {
+    color: #2c3e50;
+    font-size: 13px;
+}
+
+QMessageBox QPushButton {
+    min-width: 80px;
+    min-height: 30px;
+}
+
+/* Dialog */
+QDialog {
+    background-color: #ffffff;
+}
+
+QLabel {
+    background-color: transparent;
+    color: #2c3e50;
+}
+
+/* Spacer widgetlar */
+QWidget[objectName="spacer"],
+QWidget[objectName="spaceriki"] {
+    background-color: transparent;
+}
+
+/* CheckBox */
+QCheckBox {
+    color: #2c3e50;
+    spacing: 8px;
+}
+
+QCheckBox::indicator {
+    width: 18px;
+    height: 18px;
+    border: 2px solid #b0b0b0;
+    border-radius: 3px;
+    background-color: #ffffff;
+}
+
+QCheckBox::indicator:hover {
+    border-color: #3498db;
+}
+
+QCheckBox::indicator:checked {
+    background-color: #3498db;
+    border-color: #3498db;
+    image: url(data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTIiIGhlaWdodD0iMTIiIHZpZXdCb3g9IjAgMCAxMiAxMiIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTEwIDNMNC41IDguNUwyIDYiIHN0cm9rZT0id2hpdGUiIHN0cm9rZS13aWR0aD0iMiIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIi8+Cjwvc3ZnPgo=);
+}
+
+/* ScrollBar */
+QScrollBar:vertical {
+    background-color: #f8f9fa;
+    width: 12px;
+    border-radius: 6px;
+}
+
+QScrollBar::handle:vertical {
+    background-color: #c0c0c0;
+    border-radius: 6px;
+    min-height: 30px;
+}
+
+QScrollBar::handle:vertical:hover {
+    background-color: #a0a0a0;
+}
+
+QScrollBar::add-line:vertical, QScrollBar::sub-line:vertical {
+    height: 0px;
+}
+
+QScrollBar:horizontal {
+    background-color: #f8f9fa;
+    height: 12px;
+    border-radius: 6px;
+}
+
+QScrollBar::handle:horizontal {
+    background-color: #c0c0c0;
+    border-radius: 6px;
+    min-width: 30px;
+}
+
+QScrollBar::handle:horizontal:hover {
+    background-color: #a0a0a0;
+}
+
+QScrollBar::add-line:horizontal, QScrollBar::sub-line:horizontal {
+    width: 0px;
+}
+
+/* ToolTip */
+QToolTip {
+    background-color: #2c3e50;
+    color: #ffffff;
+    border: 1px solid #34495e;
+    border-radius: 4px;
+    padding: 5px;
+    font-size: 12px;
+}
+
+/* Menu */
+QMenu {
+    background-color: #ffffff;
+    border: 1px solid #d0d0d0;
+    border-radius: 4px;
+    padding: 5px;
+}
+
+QMenu::item {
+    padding: 6px 25px 6px 10px;
+    border-radius: 3px;
+}
+
+QMenu::item:selected {
+    background-color: #e8f4f8;
+    color: #2c3e50;
+}
+
+/* FileDialog */
+QFileDialog {
+    background-color: #ffffff;
+}
+
+QFileDialog QTreeView, QFileDialog QListView {
+    background-color: #ffffff;
+    border: 1px solid #d0d0d0;
+    border-radius: 4px;
+}
+
+QFileDialog QTreeView::item:hover, QFileDialog QListView::item:hover {
+    background-color: #e8f4f8;
+}
+
+QFileDialog QTreeView::item:selected, QFileDialog QListView::item:selected {
+    background-color: #3498db;
+    color: #ffffff;
+}
+
+QProgressBar {
+    border: none;
+    background-color: transparent;
+}
+
+QProgressBar::chunk {
+    background-color: #3498db; /* Yükleme rengi (mavi) */
+}
