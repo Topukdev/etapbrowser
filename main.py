@@ -42,7 +42,7 @@ class Browser(QMainWindow):
         
         profile = QWebEngineProfile.defaultProfile()
         #profile.setPersistentStoragePath("./profile/0")
-        #profile.setPersistentCookiesPolicy(QWebEngineProfile.AllowPersistentCookies) çok yakında!
+        #profile.setPersistentCookiesPolicy(QWebEngineProfile.AllowPersistentCookies) soon!
 
         profile.setHttpUserAgent(
         "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 "
@@ -161,7 +161,7 @@ class Browser(QMainWindow):
                 "mebi.eba.gov.tr",
                 "duckduckgo.com",
                 "google.com",
-                "restricted.html" #Sitenin yasaklı olduğunu bildiren bir sayfa
+                "engellendi.html"
             ]
         else:
             pass
@@ -179,7 +179,7 @@ class Browser(QMainWindow):
     
         if not allowed:
             current_dir = os.path.dirname(os.path.abspath(__file__))
-            restricted_path = os.path.join(current_dir, "html", "restricted.html")
+            restricted_path = os.path.join(current_dir, "classes/html", "engellendi.html")
             self.webengine.setUrl(QUrl.fromLocalFile(restricted_path))
 
 if __name__ == "__main__":

@@ -1,0 +1,29 @@
+/* Sadece stil kuralları burada yer alır */
+body {
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #ffffff;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.container {
+    text-align: center;
+}
+
+h1 {
+    color: #333333;
+    font-size: 3rem;
+    font-weight: 600;
+    letter-spacing: -1px;
+    margin: 0;
+}
+
+p {
+    color: #666666;
+    margin-top: 10px;
+    font-size: 1.1rem;
+}
