@@ -27,6 +27,12 @@ class Settings(QDialog):
         self.checkbox = QCheckBox()
         self.checkbox.setToolTip("""Sadece EBA ve MEBİ gibi\neğitim materyallerine izin\nverir. (Tarayıcının yeniden\nbaşlatılmasını gerektirir)""")
         text.setToolTip("""Sadece EBA ve MEBİ gibi\neğitim materyallerine izin\nverir. (Tarayıcının yeniden\nbaşlatılmasını gerektirir)""")
+        
+        #Acil Durum Autologout
+        emergency = QLabel("Acil Durum Otomatik Çıkışı: ")
+        self.enabledbox = QCheckBox()
+        self.enabledbox.setToolTip("""Öğrenciler engellenen sitelere\bağlanmaya çalıştıklarında\nsistemi kullanıcıdan çıkış \nyapar. (Tarayıcının yeniden\nbaşlatılmasını gerektirir)""")
+        emergency.setToolTip("""Öğrenciler engellenen sitelere\bağlanmaya çalıştıklarında\nsistemi kullanıcıdan çıkış \nyapar. (Tarayıcının yeniden\nbaşlatılmasını gerektirir)""")
 
         self.lay3 = QHBoxLayout()
         self.lay3.setContentsMargins(0, 0, 0, 0)
@@ -42,15 +48,19 @@ class Settings(QDialog):
         with open("./data/data.json", "r", encoding="utf-8") as f:
             data = json.load(f)
             self.checkbox.setChecked(data["kisitli_mod"])
+            self.enabledbox.setChecked(data["emergency"])
             self.themebox.setChecked(data["koyu?"])
 
         self.checkbox.stateChanged.connect(self.whenCheckboxChanged)
+        self.enabledbox.stateChanged.connect(self.whenEmergancySet)
         self.themebox.stateChanged.connect(self.whenThemeChanged)
 
         #Sıralama
         self.lay.addWidget(label)
         self.lay2.addWidget(text)
         self.lay2.addWidget(self.checkbox)
+        self.lay2.addWidget(emergency)
+        self.lay2.addWidget(self.enabledbox)
         self.lay2.addStretch()
         self.lay.addLayout(self.lay2)
         self.lay.addWidget(label2)
@@ -83,6 +93,22 @@ class Settings(QDialog):
         
         # Değeri güncelle (state: 2=Checked/True, 0=Unchecked/False)
         data["koyu?"] = (state == 2)
+
+        f.close()
+        
+        # Dosyaya yaz
+        with open("./data/data.json", "w", encoding="utf-8") as f:
+            json.dump(data, f, indent=4, ensure_ascii=False)
+
+        f.close()
+
+    def whenEmergancySet(self, state):
+        # Dosyayı oku
+        with open("./data/data.json", "r", encoding="utf-8") as f:
+            data = json.load(f)
+        
+        # Değeri güncelle (state: 2=Checked/True, 0=Unchecked/False)
+        data["emergency"] = (state == 2)
 
         f.close()
         

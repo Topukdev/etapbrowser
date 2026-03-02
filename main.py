@@ -4,8 +4,6 @@ from PyQt5.QtWidgets import *
 from PyQt5.QtWebEngineWidgets import * 
 import sys, os, urllib.parse, json, classes.settings, classes.sight, classes.theme
 
-os.environ["QTWEBENGINE_CHROMIUM_FLAGS"] = "--no-sandbox --disable-background-networking"
-
 class Browser(QMainWindow):
     def __init__(self):
         super().__init__()
@@ -163,6 +161,10 @@ class Browser(QMainWindow):
                 "google.com",
                 "engellendi.html"
             ]
+            if self.data["emergency"] == True:
+                os.system("xfce4-session-logout --logout --fast")
+            else:
+                pass
         else:
             pass
 
