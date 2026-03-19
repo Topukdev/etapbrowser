@@ -78,7 +78,6 @@ class ETAPBrowser(Adw.Application):
 
         self.btn_home = Gtk.Button.new_from_icon_name("go-home-symbolic")
         self.btn_home.set_tooltip_text("EBA Anasayfa'ya Dön")
-
         self.btn_menu = Gtk.MenuButton()
         self.btn_menu.set_icon_name("open-menu-symbolic")
 
@@ -139,14 +138,12 @@ class ETAPBrowser(Adw.Application):
         settings.set_enable_mediasource(True) 
         settings.set_allow_file_access_from_file_urls(True)
         settings.set_allow_universal_access_from_file_urls(True)
+        settings.set_enable_developer_extras(True)
 
         #devtools?
         if self.parsed["devtools"] is not None: #eğer verilmişse
-            settings.set_enable_developer_extras(self.parsed["devtools"]) #uygula
             if self.parsed["devtools"]: 
                 self.webview.get_inspector().show()
-        else:
-            settings.set_enable_developer_extras(True)
 
         #actions
         aboutaction = Gio.SimpleAction.new("about", None)

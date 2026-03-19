@@ -3,24 +3,24 @@ from urllib.parse import quote_plus
 import os
 
 def parse_args():
-    args = sys.argv[1:]
-    result = {
+    args = sys.argv[1:] #argümanlar
+    result = {          #argümanlar
         "url": None,
         "size": None,
         "devtools": None
     }
 
     for arg in args:
-        if arg.startswith("-size="):
+        if arg.startswith("-size="): #parametre -size ise
             try:
                 w, h = arg[6:].split("x")
-                result["size"] = (int(w), int(h))
+                result["size"] = (int(w), int(h)) #iki değeri GENISLIKxYUKSEKLIK olacak biçimde ayır
             except:
                 print("Geçersiz boyut formatı. Örnek: -size=800x600")
 
-        elif arg.startswith("-devtools="):
-            val = arg[10:].lower()
-            result["devtools"] = (val == "on")
+        elif arg.startswith("-devtools="): #parametre -devtools ise
+            val = arg[10:].lower() #argümana verilen değeri (on/off) küçük harfli yap
+            result["devtools"] = (val == "on") #değere göre (on/off) devtools'u True
 
         else:
             result["url"] = arg
