@@ -29,7 +29,10 @@ class ETAPBrowser(Adw.Application):
             window.set_default_size(1280, 768)
 
         main_box = Gtk.Box(orientation=Gtk.Orientation.VERTICAL)
-        window.set_content(main_box)
+        window.set_content(main_box) 
+
+        self.isimler = []
+        self.urller = []
 
         ##Look-----------------------
         #önce css
@@ -39,6 +42,10 @@ class ETAPBrowser(Adw.Application):
         self.header_bar = Adw.HeaderBar()
         self.header_bar.set_hexpand(False)
         main_box.append(self.header_bar) 
+
+        #bookmarklar
+        self.bookmark_bar = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL)
+        self.load_bookmarks() #bookmarkları yükle
 
         #urlbar
         self.urlbar_box = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL)
@@ -81,6 +88,10 @@ class ETAPBrowser(Adw.Application):
         self.btn_menu = Gtk.MenuButton()
         self.btn_menu.set_icon_name("open-menu-symbolic")
 
+        self.btn_mark = Gtk.Button.new_from_icon_name("starred-symbolic")
+        self.btn_mark.set_tooltip_text("Sayfayı Yer İmleri'ne Ekle")
+        self.btn_mark.connect("clicked", self.manage_bookmark)
+
         #menu
         self.menu = Gio.Menu()
         self.menu.append("Hakkında", "app.about")
@@ -99,6 +110,7 @@ class ETAPBrowser(Adw.Application):
         self.header_bar.pack_start(self.btn_refresh)
         self.header_bar.pack_start(self.btn_home)    
         self.header_bar.set_title_widget(self.urlbar_box)
+        self.header_bar.pack_end(self.btn_mark)
         self.header_bar.pack_end(self.btn_menu)
 
         ##WebKitView---------------------
@@ -126,7 +138,7 @@ class ETAPBrowser(Adw.Application):
         settings = self.webview.get_settings()
         settings.set_enable_developer_extras(True)
 
-        with open(f"{BASE_DIR}/data/data.json") as f:
+        with open(f"{BASE_DIR}/data/data.json", encoding="utf-8") as f:
             data = json.load(f)
 
         settings.set_user_agent(data["userAgent"])
@@ -146,15 +158,60 @@ class ETAPBrowser(Adw.Application):
                 self.webview.get_inspector().show()
 
         #actions
-        aboutaction = Gio.SimpleAction.new("about", None)
-        aboutaction.connect("activate", self.on_about)
-        self.add_action(aboutaction)         
+        self.aboutaction = Gio.SimpleAction.new("about", None)
+        self.aboutaction.connect("activate", self.on_about)
+        self.set_accels_for_action("app.about", ["<Super>a"])    
+        self.add_action(self.aboutaction)    
 
         #anadizilim
         main_box.append(self.load_bar)
+        main_box.append(self.bookmark_bar)
         main_box.append(self.webview)
         
         window.present()
+
+    def manage_bookmark(self, urller):
+        url = self.webview.get_uri()
+        if url in self.urller:
+            print("Bu URL yer imlerine kayıtlı, basılması halinde kaldırılacak")
+        else:
+            print("Bu URL yer imlerine kayıtlı değil, basılması halinde eklenecek")
+            self.add_bookmark(self.webview)
+
+    def add_bookmark(self, webview):
+        url = self.webview.get_uri()
+        name = self.webview.get_title()
+
+        with open(f"{BASE_DIR}/data/bookmarks.json", "r", encoding="utf-8") as f: #oku
+            data = json.load(f) #al
+
+        new_bookmark = {"name": name, "url": url} #bookmark verisini hazırla
+        data["bookmarks"].append(new_bookmark) #bekleyen veriye ekle
+
+        self.urller.append(url) #ekleyelim
+        self.urller.append(name)
+
+        with open(f"{BASE_DIR}/data/bookmarks.json", "w", encoding="utf-8") as f: #oku
+            json.dump(data, f, ensure_ascii=False, indent=2) #beklenen veriyi yaz
+
+        buton = Gtk.Button(label=name[:22])
+        buton.connect("clicked", lambda _, u=url: self.webview.load_uri(u))
+        buton.set_tooltip_text(name)
+
+        self.bookmark_bar.append(buton)
+
+    def load_bookmarks(self):
+        with open(f"{BASE_DIR}/data/bookmarks.json", "r", encoding="utf-8") as f: #oku
+            data = json.load(f) #al
+
+        self.isimler = [b["name"] for b in data["bookmarks"]] #bookmark isimleri
+        self.urller  = [b["url"]  for b in data["bookmarks"]] #bookmark urlleri
+
+        for name, url in zip(self.isimler, self.urller): #her bookmark başına
+            buton = Gtk.Button(label=name[:22]) #isimle bookmark butonu oluştur
+            buton.connect("clicked", lambda _, u=url: self.webview.load_uri(u)) #url'ye bağla
+            buton.set_tooltip_text(name)
+            self.bookmark_bar.append(buton) #ekle
 
     def load_css(self):
         css_provider = Gtk.CssProvider() #css provider
