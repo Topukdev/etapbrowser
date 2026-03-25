@@ -85,6 +85,8 @@ class ETAPBrowser(Adw.Application):
 
         self.btn_home = Gtk.Button.new_from_icon_name("go-home-symbolic")
         self.btn_home.set_tooltip_text("EBA Anasayfa'ya Dön")
+        self.btn_home.connect("clicked", lambda _: self.webview.load_uri("https://www.eba.gov.tr/"))
+        
         self.btn_menu = Gtk.MenuButton()
         self.btn_menu.set_icon_name("open-menu-symbolic")
 
@@ -110,8 +112,8 @@ class ETAPBrowser(Adw.Application):
         self.header_bar.pack_start(self.btn_refresh)
         self.header_bar.pack_start(self.btn_home)    
         self.header_bar.set_title_widget(self.urlbar_box)
-        self.header_bar.pack_end(self.btn_mark)
         self.header_bar.pack_end(self.btn_menu)
+        self.header_bar.pack_end(self.btn_mark)
 
         ##WebKitView---------------------
         #webview
